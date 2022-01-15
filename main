@@ -1,0 +1,84 @@
+// Returns a random DNA base
+const returnRandBase = () => {
+  const dnaBases = ['A', 'T', 'C', 'G']
+  return dnaBases[Math.floor(Math.random() * 4)] 
+}
+
+// Returns a random single stand of DNA containing 15 bases
+const mockUpStrand = () => {
+  const newStrand = []
+  for (let i = 0; i < 15; i++) {
+    newStrand.push(returnRandBase())
+  }
+  return newStrand
+}
+
+
+function pAequorFactory(specimentNum, dna){
+ return {
+   specimentNum,
+   dna,
+    //changes a random base of this instance's dna to another random base
+   mutate() {
+    let newNewStrand = [];    
+    for (let i = 0; i < this.dna.length; i++) {
+        let newDna = returnRandBase();
+        while (newDna === this.dna[i]) {
+        newDna = returnRandBase();
+        }
+        newNewStrand.push(newDna)
+   } 
+   return this.dna = newNewStrand;
+     console.log(this.dna);
+},
+  compareDNA(pAequor) {
+    console.log()
+      this.dna = dna;
+      const specimenTwo = pAequor.dna;
+      let numberSame = 0;
+      for(let i = 0; i < dna.length; i++) {
+        if (dna[i] === specimenTwo[i]) {
+          numberSame++;
+        }
+      }
+      numberSame/=15;
+      numberSame*=100;
+      console.log(`The two strands are ${Number.parseFloat(numberSame).toFixed(2)}% the same`)
+  }, 
+  willLikelySurvive () {
+    let objectCG = 0;
+    for (let i = 0; i < this.dna.length; i++) {
+      if(this.dna[i] === 'C' || this.dna[i] === 'G') {
+        objectCG++
+      }
+    }
+    objectCG/=15;
+    objectCG*=100;
+    if (objectCG > 60) {
+      return true;
+    } else {
+      return false;
+    };
+  },
+}
+};
+ 
+//const ex1 = pAequorFactory(1, mockUpStrand());
+//const pAequor = pAequorFactory(1, mockUpStrand());
+//console.log(pAequor)
+//console.log(pAequor.mutate())
+//console.log(pAequor.compareDNA(ex1))
+//console.log(pAequor.willLikelySurvive(ex1))
+
+let finalArray = () => {
+  let endArray = [];
+  for (let i = 0; i < 31;) {
+    let trueObject = pAequorFactory(i, mockUpStrand());
+    if(trueObject.willLikelySurvive == true) {
+      i++
+      endArray.push(trueObject)
+    };
+  } return endArray;
+};
+
+console.log(finalArray());
